@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daddy's Chariot Inc</title>
+<meta name="description" content="Daddy's Chariot Inc is a 501(c)(3) non-profit supporting fathers with open DCF/Child Welfare cases through transportation, visitation essentials, and dignity-focused services.">
+<style>
+  :root{
+    --navy:#0d1f3c;
+    --accent:#c8962a;
+    --cream:#f8f5ee;
+    --text:#1c1c1c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+  header{background:var(--navy);color:#fff;padding:20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.2);}
+  .header-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+  .logo{font-size:1.4em;font-weight:bold;color:var(--accent);}
+  nav ul{list-style:none;display:flex;gap:6px;flex-wrap:wrap;}
+  nav a{color:#fff;text-decoration:none;padding:10px 14px;border-radius:4px;font-weight:600;font-size:0.95em;cursor:pointer;}
+  nav a:hover, nav a.active{background:var(--accent);color:var(--navy);}
+  .page{display:none;max-width:1100px;margin:0 auto;padding:50px 20px;}
+  .page.active{display:block;}
+  .hero{background:linear-gradient(135deg, var(--navy), #1a3560);color:#fff;text-align:center;padding:90px 20px;}
+  .hero h1{font-size:2.4em;color:var(--accent);}
+  .hero p{max-width:650px;margin:16px auto 0;font-size:1.2em;}
+  .cta{display:inline-block;margin-top:26px;background:var(--accent);color:var(--navy);padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;}
+  .cta:hover{background:#fff;}
+  .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;background:var(--navy);color:#fff;padding:40px 20px;}
+  .stat{text-align:center;}
+  .stat .num{font-size:2em;font-weight:bold;color:var(--accent);}
+  h2{color:var(--navy);border-bottom:3px solid var(--accent);padding-bottom:10px;margin-bottom:24px;font-size:1.9em;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px;margin-top:20px;}
+  .card{background:#fff;border-radius:10px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid var(--accent);}
+  .card svg{width:40px;height:40px;stroke:var(--navy);fill:none;stroke-width:1.6;margin-bottom:12px;}
+  .card h3{color:var(--navy);margin-bottom:8px;}
+  .board-card{text-align:center;}
+  .board-card .avatar{width:80px;height:80px;border-radius:50%;background:var(--navy);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.6em;font-weight:bold;}
+  .donate-amounts{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0;}
+  .donate-amounts button{padding:14px 22px;border:2px solid var(--navy);background:#fff;border-radius:6px;font-weight:bold;cursor:pointer;font-size:1em;}
+  .donate-amounts button.selected, .donate-amounts button:hover{background:var(--navy);color:#fff;}
+  form{background:#fff;border-radius:10px;padding:26px;box-shadow:0 2px 10px rgba(0,0,0,.08);margin-top:20px;max-width:600px;}
+  form label{display:block;font-weight:600;margin-top:14px;color:var(--navy);}
+  form input, form select, form textarea{width:100%;padding:10px;margin-top:6px;border:1px solid #ccc;border-radius:5px;font-family:inherit;}
+  form button{margin-top:20px;background:var(--navy);color:#fff;border:none;padding:12px 26px;border-radius:6px;font-weight:bold;cursor:pointer;}
+  form button:hover{background:var(--accent);color:var(--navy);}
+  .success-msg{display:none;background:#e6f4ea;border:1px solid #34a853;color:#1e7e34;padding:14px;border-radius:6px;margin-top:14px;font-weight:600;}
+  footer{background:var(--navy);color:#fff;text-align:center;padding:30px 20px;margin-top:20px;}
+  footer a{color:var(--accent);text-decoration:none;}
+  @media(max-width:600px){nav ul{justify-content:center;width:100%;}.header-inner{flex-direction:column;gap:10px;}}
+  .funding-banner{background:var(--accent);color:var(--navy);text-align:center;padding:14px 20px;font-weight:700;font-size:1em;letter-spacing:.02em;}
+  .funding-banner span{text-decoration:underline;}
+  .needs-list{list-style:none;margin-top:14px;}
+  .needs-list li{padding:10px 0;border-bottom:1px solid #eee;display:flex;gap:10px;align-items:flex-start;}
+  .needs-list li:last-child{border-bottom:none;}
+  .needs-list b{color:var(--navy);}
+  .van-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:20px;}
+  .van-card{background:#fff;border-radius:10px;padding:22px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:4px solid var(--navy);text-align:center;}
+  .van-card .van-icon{font-size:2.4em;margin-bottom:10px;}
+  .van-card h3{color:var(--navy);margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">🚗 Daddy's Chariot Inc</div>
+    <nav>
+      <ul>
+        <li><a onclick="showPage('home')" class="nav-link active" data-page="home">Home</a></li>
+        <li><a onclick="showPage('about')" class="nav-link" data-page="about">About</a></li>
+        <li><a onclick="showPage('programs')" class="nav-link" data-page="programs">Programs</a></li>
+        <li><a onclick="showPage('getinvolved')" class="nav-link" data-page="getinvolved">Get Involved</a></li>
+        <li><a onclick="showPage('board')" class="nav-link" data-page="board">Board/Team</a></li>
+        <li><a onclick="showPage('donate')" class="nav-link" data-page="donate">Donate</a></li>
+        <li><a onclick="showPage('contact')" class="nav-link" data-page="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="funding-banner">🚧 <span>We are currently awaiting funding — coming soon!</span> Browse all the goods &amp; services we intend to offer below, and see how you can help us get there. 🚧</div>
+
+<section id="home" class="page active">
+  <div class="hero" style="margin:-50px -20px 0;">
+    <h1>Daddy's Chariot Inc</h1>
+    <p>Supporting fathers with open DCF/Child Welfare cases — transportation, visitation essentials, and dignity, every step of the case plan.</p>
+    <a class="cta" onclick="showPage('donate')">Support a Father Today</a>
+  </div>
+  <div class="stats" style="margin:0 -20px;">
+    <div class="stat"><div class="num">501(c)(3)</div><div>Registered Non-Profit</div></div>
+    <div class="stat"><div class="num">$0</div><div>Cost to Fathers We Serve</div></div>
+    <div class="stat"><div class="num">8+</div><div>Support Programs Offered</div></div>
+  </div>
+  <div style="padding-top:40px;">
+    <h2>Our Mission</h2>
+    <p>Daddy's Chariot Inc provides essential support services to fathers without means who are working a Case Plan under an open DCF/Child Welfare case. We remove practical barriers — transportation, hygiene, resources — so fathers can focus on reunification with their children.</p>
+  </div>
+</section>
+
+<section id="about" class="page">
+  <h2>About Daddy's Chariot Inc</h2>
+  <p>Daddy's Chariot Inc is a registered 501(c)(3) non-profit organization dedicated to helping fathers navigate the practical and emotional challenges of an open DCF/Child Welfare case. Many fathers working a Case Plan lack reliable transportation, stable housing, or the resources to present themselves well at hearings and visits — we exist to close that gap.</p>
+  <p style="margin-top:14px;">We proudly partner with <strong>Fatherhood Engagement Hub™</strong> to support fathers across every aspect of their journey — from practical case needs (our focus) to emotional and relational support (their focus).</p>
+</section>
+
+<section id="programs" class="page">
+  <h2>Our Programs</h2>
+  <div class="grid">
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M3 13l2-6h14l2 6M5 13h14v5H5z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/></svg>
+      <h3>Transportation</h3>
+      <p>Rides to and from doctor's appointments, court dates, job interviews/work, and other case-required destinations.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 4v16M4 10h16"/></svg>
+      <h3>Visitation Bags</h3>
+      <p>Bags stocked with essentials and goodies to support meaningful, prepared visits with children.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0114 0v2"/></svg>
+      <h3>Traveling Shower, Closet &amp; Grooming</h3>
+      <p>Hygiene, clothing, and grooming support so fathers can present themselves with dignity at hearings and visits.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+      <h3>Housing Assistance</h3>
+      <p>Connections to housing assistance and support resources for fathers working toward stability.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      <h3>Food Assistance</h3>
+      <p>Connections to food assistance and support resources for fathers and their families.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      <h3>Employment Support</h3>
+      <p>Job readiness support and connections to employment opportunities.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/></svg>
+      <h3>Education &amp; Job Training</h3>
+      <p>Support connecting fathers to education and job training opportunities.</p>
+    </div>
+    <div class="card">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 8v4l3 3"/></svg>
+      <h3>Legal Navigation Support</h3>
+      <p>Guidance and support navigating legal entanglements related to family and child welfare cases.</p>
+    </div>
+  </div>
+</section>
+
+<section id="getinvolved" class="page">
+  <h2>Get Involved — Help Us Launch</h2>
+  <p>Daddy's Chariot Inc is awaiting funding to open our doors. Every program on our Programs page is ready to go — we just need the community's help to make it real. Here's exactly what we need:</p>
+
+  <h3 style="color:var(--navy);margin-top:30px;margin-bottom:10px;">🚐 Vans We Need Donated (3 Total)</h3>
+  <div class="van-grid">
+    <div class="van-card">
+      <div class="van-icon">🚗</div>
+      <h3>Transport Van #1</h3>
+      <p>For rides to doctor's appointments, court dates, and job interviews.</p>
+    </div>
+    <div class="van-card">
+      <div class="van-icon">🚐</div>
+      <h3>Transport Van #2</h3>
+      <p>A second vehicle so we can serve more fathers at once, without delays.</p>
+    </div>
+    <div class="van-card">
+      <div class="van-icon">🚿</div>
+      <h3>Mobile Shower, Closet &amp; Grooming Van</h3>
+      <p>A specially outfitted van providing on-the-go hygiene, clothing, and grooming so fathers can show up with dignity.</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--navy);margin-top:34px;margin-bottom:10px;">🤝 Other Ways to Help</h3>
+  <ul class="needs-list">
+    <li>🕒 <b>Donate your time:</b> Volunteer as a driver, greeter, mentor, or program helper.</li>
+    <li>🏢 <b>Donate a space:</b> A donated office, garage, or storage space to house our vans and supplies.</li>
+    <li>🧼 <b>Donate essentials:</b> Hygiene products, clothing, visitation bag supplies, and grooming tools.</li>
+    <li>💵 <b>Financial support:</b> Every dollar helps fund vans, insurance, fuel, and program costs.</li>
+    <li>📣 <b>Spread the word:</b> Share our mission with your network, church, employer, or community group.</li>
+  </ul>
+
+  <div style="margin-top:30px;">
+    <a class="cta" style="background:var(--navy);color:#fff;" onclick="showPage('contact')">I Want to Help</a>
+  </div>
+</section>
+
+<section id="board" class="page">
+  <h2>Board &amp; Team</h2>
+  <p style="margin-bottom:20px;">Daddy's Chariot Inc is guided by a dedicated board and team committed to fatherhood, family reunification, and community support.</p>
+  <div class="grid">
+    <div class="card board-card">
+      <div class="avatar">H</div>
+      <h3>Horace Ramtahal</h3>
+      <p>Founder</p>
+    </div>
+    <div class="card board-card">
+      <div class="avatar">?</div>
+      <h3>Board Member</h3>
+      <p>Position to be announced</p>
+    </div>
+    <div class="card board-card">
+      <div class="avatar">?</div>
+      <h3>Board Member</h3>
+      <p>Position to be announced</p>
+    </div>
+  </div>
+  <p class="price-tag-note" style="margin-top:16px;color:#666;font-size:0.9em;">(Additional board and team members to be added as the organization grows.)</p>
+</section>
+
+<section id="donate" class="page">
+  <h2>Donate</h2>
+  <p>Your tax-deductible donation to Daddy's Chariot Inc, a registered 501(c)(3), directly funds transportation, visitation bags, hygiene services, and support programs for fathers working their Case Plan.</p>
+  <div class="donate-amounts">
+    <button onclick="selectAmount(this,25)">$25</button>
+    <button onclick="selectAmount(this,50)">$50</button>
+    <button onclick="selectAmount(this,100)">$100</button>
+    <button onclick="selectAmount(this,250)">$250</button>
+    <button onclick="selectAmount(this,'other')">Other</button>
+  </div>
+  <form onsubmit="return handleSubmit(event,'donate-success')">
+    <label>Donation Amount ($)</label>
+    <input type="number" id="donate-amount-input" name="amount" min="1" required>
+    <label>Your Name</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <button type="submit">Donate Now</button>
+    <div class="success-msg" id="donate-success">Thank you! Your donation intent has been recorded. (Connect a payment processor like PayPal or Stripe to accept real payments.)</div>
+  </form>
+</section>
+
+<section id="contact" class="page">
+  <h2>Contact Us</h2>
+  <p>Questions about our programs, or want to refer a father who needs support? Reach out below.</p>
+  <form onsubmit="return handleSubmit(event,'contact-success')">
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <label>Message</label>
+    <textarea name="message" rows="4" required></textarea>
+    <button type="submit">Send Message</button>
+    <div class="success-msg" id="contact-success">Thank you! Your message has been recorded. We'll be in touch soon.</div>
+  </form>
+</section>
+
+<footer>
+  <p>&copy; 2026 Daddy's Chariot Inc — A 501(c)(3) Non-Profit Organization</p>
+  <p style="margin-top:8px;font-size:0.9em;">Proud partner of <a href="https://fatherhoodengagementhub.com">Fatherhood Engagement Hub™</a></p>
+  <p style="margin-top:8px;font-size:0.85em;">Contact: <a href="mailto:cascadoux1962@gmail.com">cascadoux1962@gmail.com</a></p>
+</footer>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  document.querySelector('.nav-link[data-page="'+id+'"]').classList.add('active');
+  window.scrollTo(0,0);
+}
+function selectAmount(btn, amount){
+  document.querySelectorAll('.donate-amounts button').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if(amount !== 'other'){
+    document.getElementById('donate-amount-input').value = amount;
+  } else {
+    document.getElementById('donate-amount-input').value = '';
+    document.getElementById('donate-amount-input').focus();
+  }
+}
+function handleSubmit(e, successId){
+  e.preventDefault();
+  document.getElementById(successId).style.display='block';
+  e.target.reset();
+  return false;
+}
+</script>
+
+</body>
+</html>
