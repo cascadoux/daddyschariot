@@ -171,22 +171,28 @@
     <button onclick="selectAmount(this,250)">$250</button>
     <button onclick="selectAmount(this,'other')">Other</button>
   </div>
-  <form onsubmit="return handleSubmit(event,'donate-success')">
-    <label>Donation Amount ($)</label>
+  <form class="lg-real" action="https://formspree.io/f/mjgqjljr" method="POST" data-ok="Received — your pledge reached our inbox and someone will contact you to arrange it. No payment has been taken.">
+<input type="hidden" name="_subject" value="Daddy&#x27;s Chariot — donation pledge"/>
+<input type="hidden" name="source" value="daddyschariotinc.org / pledge"/>
+<input type="hidden" name="_gotcha" style="display:none" tabindex="-1" aria-hidden="true"/>
+    <label>Amount you would like to give ($)</label>
     <input type="number" id="donate-amount-input" name="amount" min="1" required>
     <label>Your Name</label>
     <input type="text" name="name" required>
     <label>Email</label>
     <input type="email" name="email" required>
-    <button type="submit">Donate Now</button>
-    <div class="success-msg" id="donate-success">Thank you! Your donation intent has been recorded. (Connect a payment processor like PayPal or Stripe to accept real payments.)</div>
-  </form>
+    <button type="submit">Send my pledge</button>
+  <div class="lg-msg" role="status" aria-live="polite"></div>
+</form>
 </section>
 
 <section id="contact" class="page">
   <h2>Contact Us</h2>
   <p>Questions about our programs, or want to refer a father who needs support? Reach out below.</p>
-  <form onsubmit="return handleSubmit(event,'contact-success')">
+  <form class="lg-real" action="https://formspree.io/f/mjgqjljr" method="POST" data-ok="Received — your message reached our inbox and someone will reply.">
+<input type="hidden" name="_subject" value="Daddy&#x27;s Chariot — contact message"/>
+<input type="hidden" name="source" value="daddyschariotinc.org / contact"/>
+<input type="hidden" name="_gotcha" style="display:none" tabindex="-1" aria-hidden="true"/>
     <label>Name</label>
     <input type="text" name="name" required>
     <label>Email</label>
@@ -194,8 +200,8 @@
     <label>Message</label>
     <textarea name="message" rows="4" required></textarea>
     <button type="submit">Send Message</button>
-    <div class="success-msg" id="contact-success">Thank you! Your message has been recorded. We'll be in touch soon.</div>
-  </form>
+  <div class="lg-msg" role="status" aria-live="polite"></div>
+</form>
 </section>
 
 <footer>
@@ -222,13 +228,48 @@ function selectAmount(btn, amount){
     document.getElementById('donate-amount-input').focus();
   }
 }
-function handleSubmit(e, successId){
-  e.preventDefault();
-  document.getElementById(successId).style.display='block';
-  e.target.reset();
-  return false;
-}
+/* handleSubmit removed: forms now submit for real */
 </script>
 
+
+<style>
+.lg-msg{display:none;margin-top:14px;padding:12px 14px;border-radius:6px;font-size:.93rem;line-height:1.5;text-align:left}
+.lg-msg.ok{display:block;background:#e6f4ea;border:1px solid #34a853;color:#1b6e39}
+.lg-msg.err{display:block;background:#fdecee;border:1px solid #d24b5a;color:#8d1f2d}
+form.lg-real button[disabled]{opacity:.6;cursor:progress}
+</style>
+<script>
+/* Real submission handling. The previous version of these forms displayed a
+   thank-you and discarded the data; success is now tied to a server response. */
+(function () {
+  Array.prototype.forEach.call(document.querySelectorAll('form.lg-real'), function (f) {
+    var msg = f.querySelector('.lg-msg'),
+        btn = f.querySelector('button[type=submit], button'),
+        okText = f.getAttribute('data-ok'),
+        label = btn ? btn.innerHTML : '';
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      msg.className = 'lg-msg';
+      msg.textContent = '';
+      if (btn) { btn.disabled = true; btn.innerHTML = 'Sending\u2026'; }
+      fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, data: d }; });
+        })
+        .then(function (res) {
+          if (!res.ok) throw new Error((res.data && res.data.error) || 'the server rejected it');
+          f.reset();
+          msg.className = 'lg-msg ok';
+          msg.textContent = okText;
+        })
+        .catch(function (err) {
+          msg.className = 'lg-msg err';
+          msg.textContent = 'This did not send (' + err.message + '). Nothing was saved \u2014 please try again.';
+        })
+        .then(function () { if (btn) { btn.disabled = false; btn.innerHTML = label; } });
+    });
+  });
+})();
+</script>
 </body>
 </html>
